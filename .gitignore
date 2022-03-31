@@ -4,4 +4,4 @@ testCRC32C.class
 sortTable.class
 notAllowed.java
 testCRC32C.java
-errors.txt
+*.txt
