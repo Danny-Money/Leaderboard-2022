@@ -1,1 +1,0 @@
-Swear word detected in name category, not accepted.
