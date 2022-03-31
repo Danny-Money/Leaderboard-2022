@@ -1,2 +1,6 @@
 *.png
-*.class
+entryClass.class
+testCRC32C.class
+sortTable.class
+notAllowed.java
+testCRC32C.java

@@ -1,1 +1,1 @@
-Computed SHA-256 hash does not match recieved hash, sorting failed.
+Swear word detected in name category, not accepted.
