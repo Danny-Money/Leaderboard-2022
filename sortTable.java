@@ -57,15 +57,46 @@ public class sortTable {
             
             if(!isDuplicate && !is3536Member){
                 sortEntries(entries);
+            } else{
+                String logEntries = readLog();
+                if(is3536Member){
+                    writeToFile(paths[3], logEntries + "Entry is 3536 member, not accepted. (" + readNewEntry() + ")");
+                } else if (isDuplicate){
+                    writeToFile(paths[3], logEntries + "Entry is duplicate with lower score, not writing to leaderboard. (" + readNewEntry() + ")");
+                }
             }
 
         } else{
+            String logEntries = readLog();
             if(isNotAllowed){
-                writeToFile(paths[3], "Swear word detected in name category, not accepted.");
+                writeToFile(paths[3], logEntries + "Un-allowed string detected in name category, not accepted. (" + readNewEntry() + ")");
             }else{
-                writeToFile(paths[3], "Computed SHA-256 hash does not match recieved hash, sorting failed.");
+                writeToFile(paths[3], logEntries + "Computed SHA-256 hash does not match recieved hash, sorting failed. (" + readNewEntry() + ")");
             }
         }
+    }
+
+    private static String readLog(){
+        String oldEntries = "";
+        try{
+            File newFile = new File(paths[3]);
+            FileReader fr = new FileReader(newFile); 
+            BufferedReader br = new BufferedReader(fr);
+
+            while(true){
+                String newLine = br.readLine();
+                if(newLine != null){
+                    oldEntries += newLine + "\n";
+                } else{
+                    break;
+                }
+            }
+            fr.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return oldEntries;
     }
 
     private static void sortEntries(entryClass[] entries){
