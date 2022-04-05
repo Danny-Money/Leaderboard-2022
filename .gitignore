@@ -1,5 +1,5 @@
 *.png
-entryClass.class
+entryClass.java
 testCRC32C.class
 sortTable.class
 notAllowed.java
