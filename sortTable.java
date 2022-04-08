@@ -14,6 +14,9 @@ public class sortTable {
         String[] newEntrySplit = readNewEntry().split(",");
         entryClass newEntry = new entryClass(newEntrySplit[namePos], Integer.parseInt(newEntrySplit[scorePos]), Integer.parseInt(newEntrySplit[teamPos]), newEntrySplit[hashPos]);
 
+        System.out.println("Comp hash: " + newEntry.getHashCom());
+        System.out.println("Rec hash:  " + newEntry.getHashRec());
+
         //Compares the new entry's name to a string array of not-allowed names
         for (String string : checkAllowed) {
             if(newEntrySplit[0].toLowerCase().equals(string.toLowerCase())){
@@ -39,9 +42,21 @@ public class sortTable {
                 is3536Member = true;
             }
 
+            int i = 0;
             //Test to see if person already has a higher/equal score on the leaderboard
             for (entryClass entry : entries) {
+                if(i == 5){
+                    break;
+                }
+                System.out.println(i);
+                System.out.println(entry.getName());
+                System.out.println(newEntry.getName());
+                i++;
+
                 if(entry.getName().equals(newEntry.getName())){
+                    System.out.println("New entry: " + newEntry.getName());
+                    System.out.println("Old entry: " + entry.getName());
+                    System.out.println("Duplicate name detected");
                     if(entry.getTeamNum() == newEntry.getTeamNum()){
                         if(entry.getScore() >= newEntry.getScore()){
                             //duplicate detected
