@@ -12,7 +12,7 @@ public class sortTable {
 
         //Read new entry from file and split into string array to declare entryClass object
         String[] newEntrySplit = readNewEntry().split(",");
-        entryClass newEntry = new entryClass(newEntrySplit[namePos], Integer.parseInt(newEntrySplit[scorePos]), Integer.parseInt(newEntrySplit[teamPos]), newEntrySplit[hashPos]);
+        entryClass newEntry = new entryClass(newEntrySplit[namePos], newEntrySplit[scorePos], newEntrySplit[teamPos], newEntrySplit[hashPos]);
 
         System.out.println("Comp hash: " + newEntry.getHashCom());
         System.out.println("Rec hash:  " + newEntry.getHashRec());
@@ -27,7 +27,7 @@ public class sortTable {
         
         //Checks to see if new entry is valid
         if (hasNewEntry && (newEntry.getHashCom().equals(newEntry.getHashRec()))){
-            newEntry = new entryClass(newEntrySplit[namePos], Integer.parseInt(newEntrySplit[scorePos]), Integer.parseInt(newEntrySplit[teamPos]), newEntrySplit[hashPos]);
+            newEntry = new entryClass(newEntrySplit[namePos], newEntrySplit[scorePos], newEntrySplit[teamPos], newEntrySplit[hashPos]);
 
             String[] oldEntries = readOldEntries();
 
