@@ -54,7 +54,7 @@ public class sortTable {
                 System.out.println(newEntry.getName());
                 i++;
 
-                if(entry.getName().equals(newEntry.getName())){
+                if(entry.getName().toLowerCase().equals(newEntry.getName().toLowerCase())){
                     System.out.println("New entry: " + newEntry.getName());
                     System.out.println("Old entry: " + entry.getName());
                     System.out.println("Duplicate name detected");
