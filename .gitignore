@@ -5,3 +5,4 @@ sortTable.class
 notAllowed.java
 testCRC32C.java
 *.txt
+_pycache_/
