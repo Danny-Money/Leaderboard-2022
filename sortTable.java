@@ -7,7 +7,8 @@ public class sortTable {
     public static void main(String[] args){
         //Setup main function variables
         final int namePos = 0, scorePos = 1, teamPos = 2, hashPos = 3;
-        boolean isDuplicate = false, is3536Member = false;
+        boolean[] isDuplicate = {false, false};  //First boolean is for duplicate with lower score, second is for duplicate with higher score.
+        boolean is3536Member = false;
         String[] checkAllowed = notAllowed.getNotAllowed();
 
         //Read new entry from file and split into string array to declare entryClass object
@@ -60,23 +61,37 @@ public class sortTable {
                     if(entry.getTeamNum() == newEntry.getTeamNum()){
                         if(entry.getScore() >= newEntry.getScore()){
                             //duplicate detected
-                            isDuplicate = true;
+                            System.out.println("Duplicate has a lower score.");
+                            isDuplicate[0] = true;
                         } else{
                             //Duplicate has higher score
+                            System.out.println("Duplicate has a higher score");
                             entry = newEntry;
                             newEntry = new entryClass();
+                            isDuplicate[1] = true;
                         }
                     }
                 }
             }
             
-            if(!isDuplicate && !is3536Member){
-                sortEntries(entries);
+            if(!isDuplicate[0] && !is3536Member){
+                if(isDuplicate[1]){
+                    //Person has a lower score already on the leaderboard
+                    entryClass[] trunEntries = new entryClass[5];
+                    for (i = 0; i < 5; i++){
+                        trunEntries[i] = entries[i + 1];
+                    }
+                    sortEntries(trunEntries);
+
+                } else{
+                    //Person does not have a score already on the leaderboard
+                    sortEntries(entries);
+                }
             } else{
                 String logEntries = readLog();
                 if(is3536Member){
                     writeToFile(paths[3], logEntries + "Entry is 3536 member, not accepted. (" + readNewEntry() + ")");
-                } else if (isDuplicate){
+                } else if (isDuplicate[0]){
                     writeToFile(paths[3], logEntries + "Entry is duplicate with lower score, not writing to leaderboard. (" + readNewEntry() + ")");
                 }
             }
@@ -89,6 +104,38 @@ public class sortTable {
                 writeToFile(paths[3], logEntries + "Computed SHA-256 hash does not match recieved hash, sorting failed. (" + readNewEntry() + ")");
             }
         }
+    }
+
+    private static void discardEntry(entryClass entry){
+        String oldDiscards = readDiscarded();
+        oldDiscards = getOutputString(entry) + oldDiscards;
+
+        writeToFile(paths[0], oldDiscards);
+    }
+
+    private static String readDiscarded(){
+        String oldDiscards = "";
+
+        try{
+            File newFile = new File(paths[0]);
+            FileReader fr = new FileReader(newFile); 
+            BufferedReader br = new BufferedReader(fr);
+
+            while(true){
+                String newLine = br.readLine();
+                if(newLine != null){
+                    oldDiscards += newLine + "\n";
+                } else{
+                    break;
+                }
+            }
+            fr.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+        return oldDiscards;
     }
 
     private static String readLog(){
@@ -115,8 +162,8 @@ public class sortTable {
     }
 
     private static void sortEntries(entryClass[] entries){
-        int[][] sortTableVars = new int[6][2];
-            for(int i = 0; i < 6; i++){
+        int[][] sortTableVars = new int[entries.length][2];
+            for(int i = 0; i < entries.length; i++){
                 sortTableVars[i][0] = i;
                 sortTableVars[i][1] = entries[i].getScore();
             }
@@ -124,7 +171,7 @@ public class sortTable {
             int tempVarI = 0, n = sortTableVars.length;
             entryClass tempVarEC = new entryClass();
             for(int i = 0; i < n; i++){
-                for(int j = 1; j < 6; j++){
+                for(int j = 1; j < entries.length; j++){
                     if(sortTableVars[j-1][1] < sortTableVars[j][1]){
                         //swap elements
                         tempVarEC = entries[j-1];
@@ -140,6 +187,10 @@ public class sortTable {
                 }
             }
 
+            if(entries.length == 6){
+                discardEntry(entries[5]);
+            }
+
             writeToFile(paths[2], getOutputString(entries));
     }
 
@@ -153,14 +204,27 @@ public class sortTable {
 
     private static String getOutputString(entryClass[] entries){
         String output = "";
+        int edge = 0;
 
-        for(int i = 0; i < entries.length - 1; i++){
-            if(i != entries.length - 2){
+        if(entries.length == 6){
+            edge = 1;
+        }
+
+        for(int i = 0; i < entries.length - edge; i++){
+            if(i != entries.length - 1 - edge){
                 output = output + entries[i].getName() + "," + entries[i].getScore() + "," + entries[i].getTeamNum() + "," + entries[i].getHashCom() + "\n";
             } else{
                 output = output + entries[i].getName() + "," + entries[i].getScore() + "," + entries[i].getTeamNum() + "," + entries[i].getHashCom();
             }
         }
+
+        return output;
+    }
+
+    private static String getOutputString(entryClass entry){
+        String output = "";
+
+        output = entry.getName() + "," + entry.getScore() + "," + entry.getTeamNum() + "," + entry.getHashCom() + "\n";
 
         return output;
     }
