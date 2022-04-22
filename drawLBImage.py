@@ -8,13 +8,11 @@ def main():
         if (x == 5):
             break
 
-    return 0
-
 def drawLine(line):
     if(line == 0):
         im = Image.open("Leaderboard_Blank.png")
     else:
-        im = Image.open("test.png")
+        im = Image.open("Leaderboard_Edited.png")
     draw = ImageDraw.Draw(im)
     fnt = ImageFont.truetype('Elianto-Regular.ttf', 60)
     fnt2 = ImageFont.truetype('Elianto-Regular.ttf', 40)
@@ -27,19 +25,19 @@ def drawLine(line):
             x = x + 1
 
     splitLine = lines.split(",")
+    
+    if(len(splitLine[0]) > 7):
+        newString = splitLine[0]
+        splitLine[0] = newString[:7] + "..."
 
     draw.text((110, 180 + (line * ((735-170)/5) )), splitLine[0]  , font = fnt, fill = (255, 203, 27))
     draw.text((420, 190 + (line * ((735-170)/5) )), splitLine[2], font = fnt2, fill = (255, 203, 27))
     draw.text((580, 180 + (line * ((735-170)/5) )), "- " + splitLine[1], font = fnt, fill = (255, 203, 27))
-    draw.text((750, 180 + (line * ((735-170)/5) )), "points", font = fnt, fill = (255, 203, 27))
+    draw.text((770, 180 + (line * ((735-170)/5) )), "points", font = fnt, fill = (255, 203, 27))
 
-    im.save(fp = "test.png")
-
-# Common vars for image editing
-# im = Image.open("Leaderboard.png")
-
-# fnt = ImageFont.truetype('Elianto-Regular.ttf', 60)
-# fnt2 = ImageFont.truetype('Elianto-Regular.ttf', 40)
+    im.save(fp = "Leaderboard_Edited.png")
+    
+    
 
 if __name__ == '__main__':
     main()

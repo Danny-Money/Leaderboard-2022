@@ -1,8 +1,8 @@
-import tkinter, os
+import tkinter, os, drawLBImage
 from PIL import Image, ImageTk
-from matplotlib import container
 
-def main():
+def main(a):
+    e = a
     #Create tkinter window
     root = tkinter.Tk()  
     root.title("display image")
@@ -12,18 +12,19 @@ def main():
     stgImg = ImageTk.PhotoImage(file = "Leaderboard_Edited.png")
     label = tkinter.Label(root, image = stgImg)
     label.pack()
-
+    
     def update_display():
-        stgImg = ImageTk.PhotoImage(file = "Leaderboard_Edited.png")
-        label.configure(image = stgImg)
-        label.image = stgImg
-        label.update_idletasks()
-        label.after(1500, update_display)
+        if e.isSet():
+            drawLBImage.main()
+            e.clear()
+        else:
+            stgImg = ImageTk.PhotoImage(file = "Leaderboard_Edited.png")
+            label.configure(image = stgImg)
+            label.image = stgImg
+            label.update_idletasks()
+        label.after(100, update_display)
 
     update_display()
 
     #Start window
     root.mainloop()
-
-if __name__ == '__main__':
-    main()

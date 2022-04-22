@@ -36,8 +36,8 @@ draw.text((placex     , 180 + (4 * text_spacing)), "5:", font = fnt, fill = (255
 # draw.text((teamx, 190 + (3 * text_spacing)), "(3536)", font = fnt2, fill = (255, 203, 27))
 # draw.text((teamx, 190 + (4 * text_spacing)), "(3536)", font = fnt2, fill = (255, 203, 27))
 
-draw.text((pointx, 180 + (0 * text_spacing)), "- 120 points", font = fnt, fill = (255, 203, 27))
-draw.text((pointx +170, 180 + (0 * text_spacing)), "points", font = fnt, fill = (255, 203, 27))
+draw.text((pointx, 180 + (0 * text_spacing)), "- 1200", font = fnt, fill = (255, 203, 27))
+draw.text((pointx +190, 180 + (0 * text_spacing)), "points", font = fnt, fill = (255, 203, 27))
 # draw.text((pointx, 180 + (1 * text_spacing)), "- 120 points", font = fnt, fill = (255, 203, 27))
 # draw.text((pointx, 180 + (2 * text_spacing)), "- 120 points", font = fnt, fill = (255, 203, 27))
 # draw.text((pointx, 180 + (3 * text_spacing)), "- 120 points", font = fnt, fill = (255, 203, 27))
