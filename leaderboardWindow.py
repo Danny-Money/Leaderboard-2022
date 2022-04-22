@@ -1,5 +1,5 @@
-import tkinter, os, drawLBImage
-from PIL import Image, ImageTk
+import tkinter, drawLBImage
+from PIL import ImageTk
 
 def main(a):
     e = a

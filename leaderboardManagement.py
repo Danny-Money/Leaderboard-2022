@@ -1,5 +1,4 @@
-from time import sleep
-import leaderboardWindow, threading, cv2, numpy as np, subprocess, qrReader
+import leaderboardWindow, threading, subprocess, qrReader
 from gpiozero import *
 
 global comp_Java 
